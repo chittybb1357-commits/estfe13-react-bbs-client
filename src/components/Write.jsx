@@ -4,7 +4,7 @@ import { useState } from "react";
 
 export default function Write() {
   const onSubmit = e => {
-    e.preventDefault;
+    e.preventDefault();
   };
 
   return (
