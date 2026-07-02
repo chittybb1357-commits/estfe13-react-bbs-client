@@ -5,6 +5,22 @@ import { useState } from "react";
 export default function Write() {
   const onSubmit = e => {
     e.preventDefault();
+
+    axios
+      .post("http://localhost:3000/write", {
+        title: e.target.name.value,
+        body: e.target.title.value,
+        content: e.target.content.value,
+      })
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      })
+      .finally(() => {
+        console.log("Request completed");
+      });
   };
 
   return (
@@ -27,15 +43,15 @@ export default function Write() {
 
           <Form.Control as="textarea" name="content" rows={3} />
         </Form.Group>
+
+        <div className="d-flex gap-1 justify-content-end">
+          <Button type="submit" variant="primary">
+            입력
+          </Button>
+
+          <Button variant="secondary">취소</Button>
+        </div>
       </Form>
-
-      <div className="d-flex gap-1 justify-content-end">
-        <Button type="submit" variant="primary">
-          입력
-        </Button>
-
-        <Button variant="secondary">취소</Button>
-      </div>
     </>
   );
 }
