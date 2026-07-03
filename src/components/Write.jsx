@@ -38,27 +38,32 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
             date: data.date,
           });
         })
+
         .catch(error => {
           console.error(error);
+
           setIsError(true);
         })
+
         .finally(() => {
           console.log("요청완료");
         });
     }
   }, []);
 
-  const validate = () => {
+  const validate = e => {
     const name = e.target.name.value.trim();
     const title = e.target.title.value.trim();
     const content = e.target.content.value.trim();
 
     if (!name || !title || !content) {
       alert("모든 내용을 작성해주세요");
+
       return null;
     }
 
     return {
+      // 객체 속성 축약(Property Shorthand)
       name,
       title,
       content,
@@ -69,12 +74,10 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
 
     const formData = validate(e);
 
+    if (!formData) return;
+
     axios
-      .post("http://localhost:3000/write", {
-        name: name,
-        title: title,
-        content: content,
-      })
+      .post("http://localhost:3000/write", formData)
       .then(response => {
         navigate("/");
       })
@@ -86,11 +89,13 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
   const update = e => {
     e.preventDefault();
 
+    const formData = validate(e);
+
+    if (!formData) return;
+
     axios
       .post("http://localhost:3000/update", {
-        name: e.target.name.value,
-        title: e.target.title.value,
-        content: e.target.content.value,
+        ...formData,
         id: boardId,
       })
       .then(() => {
