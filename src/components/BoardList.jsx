@@ -11,9 +11,13 @@ function Board({ data }) {
       <td>
         <Form.Check />
       </td>
+
       <td>{data.id}</td>
+
       <td>{data.title}</td>
+
       <td>{data.writer}</td>
+
       <td>{data.date}</td>
     </tr>
   );
@@ -27,6 +31,7 @@ export default function BoardList() {
       .get("http://localhost:3000/list", {})
       .then(response => {
         console.log(response.data);
+
         setList(response.data);
       })
       .catch(error => {
