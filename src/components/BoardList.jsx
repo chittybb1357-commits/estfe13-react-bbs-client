@@ -77,8 +77,6 @@ export default function BoardList() {
           입력
         </Link>
 
-        <Button variant="secondary">수정</Button>
-
         <Button variant="danger">삭제</Button>
       </div>
     </>
