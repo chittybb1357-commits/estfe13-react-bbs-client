@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
 
-export default function Write() {
+export default function Write({ isModifyMode, boardId }) {
   let navigate = useNavigate();
 
   const onSubmit = e => {
@@ -27,7 +27,7 @@ export default function Write() {
 
   return (
     <>
-      <h2 className="mb-3">글쓰기</h2>
+      <h2 className="mb-3">{isModifyMode ? "글수정" : "글쓰기"}</h2>
 
       <Form onSubmit={onSubmit}>
         <Form.Group className="mb-3" controlId="name">
