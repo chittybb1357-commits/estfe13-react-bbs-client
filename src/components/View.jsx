@@ -16,6 +16,7 @@ export default function View({ handleModify }) {
   useEffect(() => {
     axios
       .get(`http://localhost:3000/view?id=${id}`)
+
       .then(response => {
         console.log(response.data); //[{..}]
         //setContent(response.data);
@@ -23,6 +24,7 @@ export default function View({ handleModify }) {
         // data가 없거나 data의 배열의 개수가 0가 같다면
         if (!response.data || response.data.length === 0) {
           setIsError(true);
+
           return;
         }
 
@@ -35,9 +37,11 @@ export default function View({ handleModify }) {
           date: data.date,
         });
       })
+
       .catch(error => {
         console.error(error);
       })
+
       .finally(() => {
         console.log("요청완료");
       });
