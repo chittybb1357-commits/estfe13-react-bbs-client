@@ -86,6 +86,11 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
       .finally(() => {});
   };
 
+  const handleClick = () => {
+    handleClick();
+    navigate("/");
+  };
+
   return (
     <>
       <h2 className="mb-3">{isModifyMode ? "글수정" : "글쓰기"}</h2>
@@ -124,7 +129,9 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
             입력
           </Button>
 
-          <Button variant="secondary">취소</Button>
+          <Button variant="secondary" onClick={handleClick}>
+            취소
+          </Button>
         </div>
       </Form>
     </>
