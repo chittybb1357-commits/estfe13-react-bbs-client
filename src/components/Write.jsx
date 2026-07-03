@@ -18,6 +18,7 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
       //boardId로 서버에 글 조회, 조회결과로 content 업데이트
       axios
         .get(`http://localhost:3000/view?id=${boardId}`)
+
         .then(response => {
           console.log(response.data); //[{..}]
           //setContent(response.data);
@@ -78,12 +79,15 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
 
     axios
       .post("http://localhost:3000/write", formData)
+
       .then(response => {
         navigate("/");
       })
+
       .catch(error => {
         console.error(error);
       })
+
       .finally(() => {});
   };
   const update = e => {
@@ -98,13 +102,16 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
         ...formData,
         id: boardId,
       })
+
       .then(() => {
         handleCancel();
         navigate("/");
       })
+
       .catch(error => {
         console.error(error);
       })
+
       .finally(() => {});
   };
   const handleClick = () => {
