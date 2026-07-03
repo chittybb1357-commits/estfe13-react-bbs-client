@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router";
 
-export default function View() {
+export default function View({ handleModify }) {
   const [content, setContent] = useState({
     writer: "",
     title: "",
@@ -57,6 +57,10 @@ export default function View() {
     );
   }
 
+  const handleClick = () => {
+    handleModify(id);
+  };
+
   return (
     <>
       <h2>{content.title}</h2>
@@ -74,7 +78,9 @@ export default function View() {
           홈
         </Link>
 
-        <Button variant="secondary">수정</Button>
+        <Button variant="secondary" onClick={handleClick}>
+          수정
+        </Button>
 
         <Button variant="danger">삭제</Button>
       </div>
