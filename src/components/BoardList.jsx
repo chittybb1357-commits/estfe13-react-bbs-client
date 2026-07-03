@@ -5,11 +5,15 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 
-function Board({ data }) {
+function Board({ data, onCheckBoxChange }) {
   return (
     <tr>
       <td>
-        <Form.Check />
+        <Form.Check
+          onChange={e => {
+            onCheckBoxChange(e.target.checked, data.id);
+          }}
+        />
       </td>
 
       <td>{data.id}</td>
@@ -27,6 +31,7 @@ function Board({ data }) {
 
 export default function BoardList() {
   const [list, setList] = useState([]);
+  const [checkList, setCheckList] = useState([]);
 
   useEffect(() => {
     axios
@@ -43,6 +48,38 @@ export default function BoardList() {
         console.log("요청완료");
       });
   }, []);
+
+  const onCheckBoxChange = (checked, id) => {
+    setCheckList(prev => {
+      if (checked) {
+        return [...prev, id];
+      } else {
+        return prev.filter(item => item !== id);
+      }
+    });
+  };
+  const handleDelete = () => {
+    if (checkList.length === 0) {
+      alert("삭제할 글을 선택해주세요.");
+
+      return;
+    }
+
+    const boardIdList = checkList.join();
+
+    axios
+      .post("http://localhost:3000/deleteselect", { boardIdList })
+
+      .then(response => {
+        navigate("/");
+      })
+
+      .catch(error => {
+        console.error(error);
+      })
+
+      .finally(() => {});
+  };
 
   return (
     <>
@@ -67,7 +104,9 @@ export default function BoardList() {
               <td colSpan={5}>글이 없습니다.</td>
             </tr>
           ) : (
-            list.map((item, idx) => <Board key={idx} data={item} />)
+            list.map((item, idx) => (
+              <Board key={idx} data={item} onCheckBoxChange={onCheckBoxChange} />
+            ))
           )}
         </tbody>
       </Table>
@@ -77,7 +116,9 @@ export default function BoardList() {
           입력
         </Link>
 
-        <Button variant="danger">삭제</Button>
+        <Button variant="danger" onClick={handleDelete}>
+          삭제
+        </Button>
       </div>
     </>
   );
