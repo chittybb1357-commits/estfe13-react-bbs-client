@@ -14,7 +14,9 @@ function Board({ data }) {
 
       <td>{data.id}</td>
 
-      <td>{data.title}</td>
+      <td>
+        <Link to={`/view/${data.id}`}>{data.title}</Link>
+      </td>
 
       <td>{data.writer}</td>
 
