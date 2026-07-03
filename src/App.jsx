@@ -15,6 +15,10 @@ function App() {
     setIsModifyMode(true);
     navigate("/write");
   };
+  const handleCancel = () => {
+    setBoardId(0);
+    setIsModifyMode(false);
+  };
 
   return (
     <div className="container">
@@ -23,7 +27,12 @@ function App() {
       <Routes>
         <Route path="/" element={<BoardList />} />
 
-        <Route path="/write" element={<Write isModifyMode={isModifyMode} boardId={boardId} />} />
+        <Route
+          path="/write"
+          element={
+            <Write isModifyMode={isModifyMode} boardId={boardId} handleCancel={handleCancel} />
+          }
+        />
 
         <Route path="/view/:id" element={<View handleModify={handleModify} />} />
       </Routes>
