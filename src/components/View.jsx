@@ -10,6 +10,7 @@ export default function View() {
     content: "",
     date: "",
   });
+  const [isError, setIsError] = useState(false);
   const { id } = useParams();
 
   useEffect(() => {
@@ -18,6 +19,12 @@ export default function View() {
       .then(response => {
         console.log(response.data); //[{..}]
         //setContent(response.data);
+
+        // data가 없거나 data의 배열의 개수가 0가 같다면
+        if (!response.data || response.data.length === 0) {
+          setIsError(true);
+          return;
+        }
 
         const data = response.data[0];
 
@@ -35,6 +42,20 @@ export default function View() {
         console.log("요청완료");
       });
   }, []);
+
+  if (isError) {
+    return (
+      <div>
+        <p>잘못된 접근입니다.</p>
+
+        <p>다시확인해주세요</p>
+
+        <Link to="/" className="btn btn-primary">
+          홈으로 이동
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <>
