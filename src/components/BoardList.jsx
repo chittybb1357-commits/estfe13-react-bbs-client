@@ -2,7 +2,7 @@ import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Link, useNavigate } from "react-router";
 
 function Board({ data, onCheckBoxChange }) {
@@ -37,7 +37,7 @@ export default function BoardList() {
 
   let navigate = useNavigate();
 
-  const getList = () => {
+  const getList = useCallback(() => {
     axios
       .get("http://localhost:3000/list", {})
 
@@ -54,11 +54,11 @@ export default function BoardList() {
       .finally(() => {
         console.log("요청완료");
       });
-  };
+  }, []);
 
   useEffect(() => {
     getList();
-  }, []);
+  }, [getList]);
 
   const onCheckBoxChange = (checked, id) => {
     setCheckList(prev => {
