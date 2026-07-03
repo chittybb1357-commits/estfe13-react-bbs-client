@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 function Board({ data, onCheckBoxChange }) {
   return (
@@ -30,23 +30,34 @@ function Board({ data, onCheckBoxChange }) {
 }
 
 export default function BoardList() {
+  console.log("BoardList 렌더");
+
   const [list, setList] = useState([]);
   const [checkList, setCheckList] = useState([]);
 
-  useEffect(() => {
+  let navigate = useNavigate();
+
+  const getList = () => {
     axios
       .get("http://localhost:3000/list", {})
+
       .then(response => {
         console.log(response.data);
 
         setList(response.data);
       })
+
       .catch(error => {
         console.error(error);
       })
+
       .finally(() => {
         console.log("요청완료");
       });
+  };
+
+  useEffect(() => {
+    getList();
   }, []);
 
   const onCheckBoxChange = (checked, id) => {
@@ -71,7 +82,7 @@ export default function BoardList() {
       .post("http://localhost:3000/deleteselect", { boardIdList })
 
       .then(response => {
-        navigate("/");
+        getList();
       })
 
       .catch(error => {
