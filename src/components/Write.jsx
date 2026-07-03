@@ -33,23 +33,13 @@ export default function Write() {
         <Form.Group className="mb-3" controlId="name">
           <Form.Label>글쓴이</Form.Label>
 
-          <Form.Control
-            type="text"
-            name="name"
-            // defaultValue="홍길동"
-            placeholder="이름을 입력해주세요!"
-          />
+          <Form.Control type="text" name="name" placeholder="이름을 입력해주세요!" />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="title">
           <Form.Label>제목</Form.Label>
 
-          <Form.Control
-            type="text"
-            name="title"
-            // defaultValue="제목"
-            placeholder="제목을 입력해주세요!"
-          />
+          <Form.Control type="text" name="title" placeholder="제목을 입력해주세요!" />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="content">
