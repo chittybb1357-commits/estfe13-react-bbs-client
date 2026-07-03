@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router";
 
 function Board({ data }) {
   return (
@@ -61,7 +62,9 @@ export default function BoardList() {
       </Table>
 
       <div className="d-flex gap-1 justify-content-end">
-        <Button variant="primary">입력</Button>
+        <Link to="/write" className="btn btn-primary">
+          입력
+        </Link>
 
         <Button variant="secondary">수정</Button>
 
