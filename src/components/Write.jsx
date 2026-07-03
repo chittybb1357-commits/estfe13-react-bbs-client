@@ -1,6 +1,6 @@
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import axios from "axios";
 
@@ -15,7 +15,7 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
 
   useEffect(() => {
     if (isModifyMode && boardId) {
-      // boardId로 서버에 글 조회
+      //boardId로 서버에 글 조회, 조회결과로 content 업데이트
       axios
         .get(`http://localhost:3000/view?id=${boardId}`)
         .then(response => {
@@ -48,14 +48,32 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
     }
   }, []);
 
+  const validate = () => {
+    const name = e.target.name.value.trim();
+    const title = e.target.title.value.trim();
+    const content = e.target.content.value.trim();
+
+    if (!name || !title || !content) {
+      alert("모든 내용을 작성해주세요");
+      return null;
+    }
+
+    return {
+      name,
+      title,
+      content,
+    };
+  };
   const write = e => {
     e.preventDefault();
 
+    const formData = validate(e);
+
     axios
       .post("http://localhost:3000/write", {
-        name: e.target.name.value,
-        title: e.target.title.value,
-        content: e.target.content.value,
+        name: name,
+        title: title,
+        content: content,
       })
       .then(response => {
         navigate("/");
@@ -65,7 +83,6 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
       })
       .finally(() => {});
   };
-
   const update = e => {
     e.preventDefault();
 
@@ -85,9 +102,8 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
       })
       .finally(() => {});
   };
-
   const handleClick = () => {
-    handleClick();
+    handleCancel();
     navigate("/");
   };
 
@@ -104,6 +120,7 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
             name="name"
             defaultValue={content.name}
             placeholder="이름을 입력해주세요"
+            required
           />
         </Form.Group>
 
@@ -115,13 +132,20 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
             name="title"
             defaultValue={content.title}
             placeholder="제목을 입력해주세요"
+            required
           />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="content">
           <Form.Label>내용</Form.Label>
 
-          <Form.Control as="textarea" name="content" defaultValue={content.content} rows={3} />
+          <Form.Control
+            as="textarea"
+            name="content"
+            defaultValue={content.content}
+            rows={3}
+            required
+          />
         </Form.Group>
 
         <div className="d-flex gap-1 justify-content-end">
