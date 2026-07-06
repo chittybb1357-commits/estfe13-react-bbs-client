@@ -13,6 +13,7 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
     content: "",
     image: null,
   });
+  const [removeImage, setRemoveImage] = useState(false); // 기존 이미지 삭제 여부
 
   useEffect(() => {
     if (isModifyMode && boardId) {
@@ -38,6 +39,8 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
             title: data.title,
             content: data.content,
             date: data.date,
+            image_path: data.image_path || "", // 기존 이미지
+            image: null, // 새 이미지
           });
         })
 
@@ -79,7 +82,10 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
     formData.append("content", validatedData.content);
 
     if (content.image) {
-      formData.append("image", content.image);
+      formData.append("image", content.image); // 새 이미지
+    }
+    if (removeImage) {
+      formData.append("remove_image", "1"); // 기존 이미지 지운다 true
     }
     return formData;
   };
@@ -203,6 +209,25 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
 
           <Form.Control type="file" accept="image/*" onChange={handleImageChange} />
         </Form.Group>
+
+        {content.image_path && (
+          <div>
+            <img
+              src={`http://localhost:3000/${content.image_path}`}
+              alt={content.title}
+              style={{ maxWidth: "200px" }}
+            />
+
+            <Form.Check // prettier-ignore
+              type="checkbox"
+              id={`default-check`}
+              label="기존 이미지 제거"
+              onChange={e => {
+                setRemoveImage(e.target.checked);
+              }}
+            />
+          </div>
+        )}
 
         <div className="d-flex gap-1 justify-content-end">
           <Button type="submit" variant="primary">
