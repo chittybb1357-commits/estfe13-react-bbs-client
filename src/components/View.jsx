@@ -3,6 +3,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export default function View({ handleModify }) {
   const [content, setContent] = useState({
     writer: "",
