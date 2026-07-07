@@ -19,7 +19,7 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
     if (isModifyMode && boardId) {
       // boardId로 서버에 글 조회, 조회결과로 content 업데이트
       axios
-        .get(`http://localhost:3000/view?id=${boardId}`)
+        .get(`${API_URL}/view?id=${boardId}`)
 
         .then(response => {
           console.log(response.data); //[{..}]
@@ -108,7 +108,7 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
     }
 
     axios
-      .post("http://localhost:3000/write", formData, {
+      .post(`${API_URL}/write`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
 
@@ -138,7 +138,7 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
     }
 
     axios
-      .post("http://localhost:3000/update", formData, {
+      .post(`${API_URL}/update`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
 
@@ -216,7 +216,7 @@ export default function Write({ isModifyMode, boardId, handleCancel }) {
         {content.image_path && (
           <div>
             <img
-              src={`http://localhost:3000/${content.image_path}`}
+              src={`${API_URL}/${content.image_path}`}
               alt={content.title}
               style={{ maxWidth: "200px" }}
             />
