@@ -103,11 +103,7 @@ export default function View({ handleModify }) {
 
       {content.image && (
         <div>
-          <img
-            src={`${API_URL}/${content.image}`}
-            alt={content.title}
-            style={{ maxWidth: "80%" }}
-          />
+          <img src={`/${content.image}`} alt={content.title} style={{ maxWidth: "80%" }} />
         </div>
       )}
       <hr />
